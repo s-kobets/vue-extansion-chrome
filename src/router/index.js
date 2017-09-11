@@ -6,7 +6,7 @@ const Home = (resolve) => require(['@/containers/Home'], resolve)
 Vue.use(Router)
 
 const routes = [
-  {path: '/', component: Home},
+  {path: '/', component: Home}
 ]
 
 export default new Router({

@@ -7,7 +7,21 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 
 module.exports = merge(baseConfig, {
   plugins: [
-    new ManifestPlugin()
+    new ManifestPlugin({
+      seed: {
+        manifest_version: 2,
+        name: 'Bet_Extansion_Chrome',
+        version: '1.0',
+        browser_action: {
+          default_icon: 'logo.png',
+          default_page: 'index.html'
+        },
+
+        permissions: [
+          'activeTab'
+        ]
+      }
+    })
   ]
 })
 

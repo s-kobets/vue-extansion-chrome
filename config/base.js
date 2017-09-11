@@ -1,5 +1,7 @@
 const path = require('path')
 const postCssConfig = require('../postcss.config')
+const HtmlPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -9,9 +11,22 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: '[name].js'
   },
+
+  plugins: [
+    new HtmlPlugin({
+      title: 'Chrome Extension APP',
+      filename: 'index.html',
+      template: path.join(__dirname, '../index.html')
+    }),
+
+    new CopyWebpackPlugin([
+      { from: './src/assets/img/logo.png', to: './' }
+    ])
+
+  ],
 
   module: {
     rules: [

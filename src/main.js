@@ -10,5 +10,8 @@ new Vue({
   el: '#app',
   store,
   router,
+  created() {
+    console.log('+++ created +++')
+  },
   render: h => h(App)
 })
