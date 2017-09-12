@@ -2,17 +2,25 @@
   <div id="app">
     <div>
       Hello Chrome Extansion
-      <button>1234</button>
+      <button @click="onClick">Google</button>
     </div>
   </div>
 </template>
 
 <script>
+const bkg = chrome.extension.getBackgroundPage() // for console.log()
 
 export default {
   name: 'app',
 
-  methods: {},
+  methods: {
+    onClick() {
+      chrome.extension.sendMessage({
+        action: "openNewTab",
+        url: "https://www.google.com"
+      })
+    }
+  },
 
   components: {},
 }

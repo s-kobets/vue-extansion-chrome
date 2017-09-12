@@ -1,23 +1,19 @@
-// the background script runs all the time and serves as a central message
-// hub for each vue devtools (panel + proxy + backend) instance.
+// Called when the user clicks on the browser action.
 /* global chrome */
 
-console.log(chrome.browserAction, chrome.extension)
-chrome.browserAction.onClicked.addListener(function (tab) { // Fired when User Clicks ICON
-
-  // if (tab.url.indexOf("https://www.google.co.in/") != -1) { // Inspect whether the place where user clicked matches with our list of URL
-  //   chrome.tabs.executeScript(tab.id, {
-  //     'file': 'contentscript.js'
-  //   }, function () { // Execute your code
-  //     console.log("Script Executed .. "); // Notification on Completion
-  //   });
-  // }
-
-  // for popup window
-  // const bkg = chrome.extension.getBackgroundPage()
-  // bkg.console.log(tab)
-
-  chrome.browserAction.setPopup({popup: 'index.html'})
-
-  console.log('click', tab)
+chrome.browserAction.onClicked.addListener(function (tab) {
+  // Send a message to the active tab
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+    var activeTab = tabs[0]
+    chrome.tabs.sendMessage(activeTab.id, {'message': 'clicked_browser_action'})
+    console.log(111, tabs)
+  })
 })
+
+chrome.extension.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    if (request.action === 'openNewTab') {
+      chrome.tabs.create({ url: request.url })
+    }
+  }
+)
