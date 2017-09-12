@@ -16,8 +16,8 @@ export default {
   methods: {
     onClick() {
       chrome.extension.sendMessage({
-        action: "openNewTab",
-        url: "https://www.google.com"
+        action: 'openNewTab',
+        url: 'https://www.google.com'
       })
     }
   },

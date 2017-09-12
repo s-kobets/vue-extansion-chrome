@@ -13,13 +13,29 @@ new Vue({
   store,
   router,
   created () {
-    console.log('+++ created +++')
+    function setDOMInfo (info) {
+      console.log(info)
+      // document.getElementById('total').textContent = info.total
+      // document.getElementById('inputs').textContent = info.inputs
+      // document.getElementById('buttons').textContent = info.buttons
+    }
 
-    chrome.runtime.onMessage.addListener(
-      function (request, sender, sendResponse) {
-        console.log(request.message, sender, sendResponse)
-      }
-    )
+    console.log('+++ created +++')
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, function (tabs) {
+      // ...and send a request for the DOM info...
+      chrome.tabs.sendMessage(
+        tabs[0].id,
+        {from: 'popup', subject: 'DOMInfo'},
+        // ...also specifying a callback to be called
+        //    from the receiving end (content script)
+        setDOMInfo
+      )
+    })
   },
+
   render: h => h(App)
+
 }).$mount('#app')

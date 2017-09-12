@@ -27,6 +27,13 @@ module.exports = merge(baseConfig, {
           scripts: ['background.js']
         },
 
+        content_scripts: [
+          {
+            matches: ['<all_urls>'],
+            js: ['content.js']
+          }
+        ],
+
         permissions: [
           'activeTab'
         ]

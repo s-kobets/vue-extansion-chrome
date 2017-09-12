@@ -10,7 +10,8 @@ function resolve (dir) {
 module.exports = {
   entry: {
     main: './src/main.js',
-    background: './src/background.js'
+    background: './src/background.js',
+    content: './src/content.js'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
