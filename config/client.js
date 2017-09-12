@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin')
 const baseConfig = require('./base.js')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const ManifestPlugin = require('webpack-manifest-plugin')
 
 module.exports = merge(baseConfig, {
@@ -14,7 +14,17 @@ module.exports = merge(baseConfig, {
         version: '1.0',
         browser_action: {
           default_icon: 'logo.png',
-          default_page: 'index.html'
+          default_popup: 'index.html'
+        },
+
+        icons: {
+          16: 'logo.png',
+          48: 'logo.png',
+          128: 'logo.png'
+        },
+
+        background: {
+          scripts: ['background.js']
         },
 
         permissions: [
@@ -47,9 +57,9 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 } else {
-  module.exports.plugins = (module.exports.plugins || []).concat([
-      new BundleAnalyzerPlugin({
-      analyzerPort: 9999
-    })
-  ])
+  // module.exports.plugins = (module.exports.plugins || []).concat([
+  //     new BundleAnalyzerPlugin({
+  //     analyzerPort: 9999
+  //   })
+  // ])
 }

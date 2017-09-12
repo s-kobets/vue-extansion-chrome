@@ -1,4 +1,4 @@
-# vue-blog
+# vue-extansion-chrome
 
 > A Vue.js project
 

@@ -7,11 +7,11 @@ import router from './router'
 import store from './store/'
 
 new Vue({
-  el: '#app',
+  // el: '#app',
   store,
   router,
-  created() {
+  created () {
     console.log('+++ created +++')
   },
   render: h => h(App)
-})
+}).$mount('#app')

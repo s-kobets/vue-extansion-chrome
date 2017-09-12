@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div>
+      Hello Chrome Extansion
+      <button>1234</button>
+    </div>
   </div>
 </template>
 

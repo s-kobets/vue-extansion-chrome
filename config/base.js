@@ -8,7 +8,10 @@ function resolve (dir) {
 }
 
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    background: './src/background.js'
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
@@ -39,6 +42,18 @@ module.exports = {
           },
           // other vue-loader options go here
           cssSourceMap: false
+        }
+      },
+      {
+        test: /\.html$/,
+        loader: 'vue-template-loader',
+        exclude: resolve('index.html'),
+        options: {
+          transformToRequire: {
+            // The key should be an element name
+            // The value should be an attribute name or an array of attribute names
+            img: 'src'
+          }
         }
       },
       {
@@ -79,5 +94,5 @@ module.exports = {
     hints: false
   },
 
-  devtool: '#eval-source-map'
+  devtool: '#source-map'
 }

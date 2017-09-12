@@ -1,6 +1,7 @@
 <template>
   <div>
     Hello Chrome Extansion
+    <button>1234</button>
   </div>
 </template>
 
