@@ -8,7 +8,7 @@
 </template>
 
 <script>
-const bkg = chrome.extension.getBackgroundPage() // for console.log()
+// const bkg = chrome.extension.getBackgroundPage() // for console.log()
 
 export default {
   name: 'app',

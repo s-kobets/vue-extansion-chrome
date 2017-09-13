@@ -13,8 +13,9 @@ module.exports = merge(baseConfig, {
         name: 'Bet_Extansion_Chrome',
         version: '1.0',
         browser_action: {
-          default_icon: 'logo.png',
-          default_popup: 'index.html'
+          default_title: 'bet extansion',
+          default_icon: 'logo.png'
+          // default_popup: 'index.html'
         },
 
         icons: {
@@ -24,18 +25,21 @@ module.exports = merge(baseConfig, {
         },
 
         background: {
-          scripts: ['background.js']
+          scripts: ['background.js'],
+          persistent: false
         },
 
         content_scripts: [
           {
             matches: ['<all_urls>'],
             js: ['content.js']
+            // css: ['']
           }
         ],
 
         permissions: [
-          'activeTab'
+          'activeTab',
+          '<all_urls>'
         ]
       }
     })

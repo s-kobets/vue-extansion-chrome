@@ -5,13 +5,10 @@
 import Vue from 'vue'
 
 import App from './App'
-import router from './router'
 import store from './store/'
 
 new Vue({
-  // el: '#app',
   store,
-  router,
   created () {
     function setDOMInfo (info) {
       console.log(info)
@@ -20,7 +17,11 @@ new Vue({
       // document.getElementById('buttons').textContent = info.buttons
     }
 
-    console.log('+++ created +++')
+    console.log(11111, '+++ created +++')
+    chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+      console.log(44444, 'main', request)
+    })
+
     chrome.tabs.query({
       active: true,
       currentWindow: true
