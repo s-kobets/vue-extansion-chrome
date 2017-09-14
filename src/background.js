@@ -22,7 +22,7 @@ window.onload = function () { // work for each click in ixon
       // добавляем разметку в текущую вкладку
       if (!bg.isClassBet) {
         // chrome.tabs.executeScript(id,
-        //   {code: `document.body.innerHTML += '<div class="bet_extansion disabled"><p>Hello Chrome Extansion</p><button><a href="https://google.ru" target="_blank">Google</a></button></div>'`},
+        //   {code: `document.body.innerHTML += ''`},
         //   () => { console.log(4343, 'add Content') }
         // )
         console.log(80000, 'add HTML')
@@ -35,7 +35,7 @@ window.onload = function () { // work for each click in ixon
           chrome.browserAction.setBadgeText({text: '1'})
 
           chrome.extension.sendMessage({
-            action: 'xnrResult',
+            action: 'xhrResult',
             value: bg.xnrResult
           })
         } else {
