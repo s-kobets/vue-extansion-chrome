@@ -36,7 +36,7 @@ export default {
     chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
       console.log(989777, 'addListener vue', request)
       switch (request.action) {
-        case 'xnrResult':
+        case 'xhrResult':
           this.dataResponse = request.value
           break
       }

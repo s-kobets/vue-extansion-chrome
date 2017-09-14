@@ -7,8 +7,8 @@
   color: green;
   display: flex;
   justify-content: space-around;
+}
 
-  &.disabled {
-    display: none;
-  }
+.bet_extansion.disabled {
+  display: none;
 }

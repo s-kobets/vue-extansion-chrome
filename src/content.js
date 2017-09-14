@@ -16,7 +16,8 @@ window.addEventListener('load', function () {
       dataResponse += `<span>${match.event.name}</span>-<span>${match.event.kind.name}</span>=<span>${match.coefficient}</span>`
     })
 
-    div.innerHtml = dataResponse
+    div.innerHTML = dataResponse
+    div.className = 'bet_extansion_content'
     return div
   }
 
@@ -51,15 +52,17 @@ window.addEventListener('load', function () {
     console.log(12343, 'content, response', request)
     switch (request.action) {
       case 'xhrResult':
-        debugger
         const betExtansion = document.querySelectorAll('.bet_extansion')[0]
+        const betExtansionContent = document.querySelectorAll('.bet_extansion_content')[0]
         if (!betExtansion) {
           break
         }
-        const button = createButton()
-        console.log(1114566, betExtansion)
+        if (betExtansionContent) {
+          betExtansion.removeChild(betExtansionContent)
+        }
+        const button = betExtansion.querySelectorAll('a')[0]
         betExtansion.classList.remove('disabled')
-        betExtansion.insertBefore(addPrognosis(request.value), button)
+        betExtansion.insertBefore(addPrognosis(request.value.result), button)
         break
     }
   })

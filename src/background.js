@@ -34,10 +34,14 @@ window.onload = function () { // work for each click in ixon
           bg.xnrResult = JSON.parse(xhr.responseText)
           chrome.browserAction.setBadgeText({text: '1'})
 
-          chrome.extension.sendMessage({
+          const message = {
             action: 'xhrResult',
             value: bg.xnrResult
-          })
+          }
+
+          chrome.extension.sendMessage(message)
+
+          chrome.tabs.sendMessage(bg.active_tab.id, message)
         } else {
           console.log('error Request')
         }
