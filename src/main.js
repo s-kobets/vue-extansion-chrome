@@ -10,31 +10,6 @@ import store from './store/'
 new Vue({
   store,
   created () {
-    function setDOMInfo (info) {
-      console.log(info)
-      // document.getElementById('total').textContent = info.total
-      // document.getElementById('inputs').textContent = info.inputs
-      // document.getElementById('buttons').textContent = info.buttons
-    }
-
-    console.log(11111, '+++ created +++')
-    chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
-      console.log(44444, 'main', request)
-    })
-
-    chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    }, function (tabs) {
-      // ...and send a request for the DOM info...
-      chrome.tabs.sendMessage(
-        tabs[0].id,
-        {from: 'popup', subject: 'DOMInfo'},
-        // ...also specifying a callback to be called
-        //    from the receiving end (content script)
-        setDOMInfo
-      )
-    })
   },
 
   render: h => h(App)

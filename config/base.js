@@ -27,7 +27,8 @@ module.exports = {
     }),
 
     new CopyWebpackPlugin([
-      { from: './src/assets/img/logo.png', to: './' }
+      { from: './src/assets/img/logo.png', to: './' },
+      { from: './src/assets/css/content.css', to: './' }
     ])
 
   ],

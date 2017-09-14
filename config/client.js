@@ -32,8 +32,8 @@ module.exports = merge(baseConfig, {
         content_scripts: [
           {
             matches: ['<all_urls>'],
-            js: ['content.js']
-            // css: ['']
+            js: ['content.js'],
+            css: ['content.css']
           }
         ],
 

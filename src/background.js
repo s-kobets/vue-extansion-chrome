@@ -3,24 +3,47 @@
 
 window.onload = function () { // work for each click in ixon
   const bg = {}
+  const xhr = new XMLHttpRequest()
 
+  const ajax = (xhr, url, typeRequest, body) => {
+    xhr.open(typeRequest, url, true)
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhr.send(body)
+  }
   // create image icon
-  chrome.browserAction.setBadgeText({text: '0'})
+  chrome.browserAction.setBadgeText({text: ''}) // empty text badge
 
   // set handler to tabs
   chrome.tabs.onUpdated.addListener((id, info, tab) => {
     // Полная загрузка страницы
     if (info && info.status === 'complete') {
-      console.log(3345, 'onUpdated', id, info, tab)
+      console.log(3345, 'onUpdated', bg, id, info, tab)
 
       // добавляем разметку в текущую вкладку
-      if (!document.getElementById('bet_extansion')) {
-        chrome.tabs.executeScript(id,
-          {code: `document.body.innerHTML += '<div class="bet_extansion"><p>Hello Chrome Extansion</p><button>Google</button></div>'`},
-          () => { console.log(4343, 'add Content') }
-        )
-
+      if (!bg.isClassBet) {
+        // chrome.tabs.executeScript(id,
+        //   {code: `document.body.innerHTML += '<div class="bet_extansion disabled"><p>Hello Chrome Extansion</p><button><a href="https://google.ru" target="_blank">Google</a></button></div>'`},
+        //   () => { console.log(4343, 'add Content') }
+        // )
+        console.log(80000, 'add HTML')
       }
+
+      xhr.onreadystatechange = () => {
+        console.log(xhr.readyState, xhr.status)
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          bg.xnrResult = JSON.parse(xhr.responseText)
+          chrome.browserAction.setBadgeText({text: '1'})
+
+          chrome.extension.sendMessage({
+            action: 'xnrResult',
+            value: bg.xnrResult
+          })
+        } else {
+          console.log('error Request')
+        }
+      }
+
+      ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
 
       // open popup
       chrome.browserAction.setPopup({popup: 'index.html'})
@@ -46,6 +69,8 @@ window.onload = function () { // work for each click in ixon
   // set handler to tabs (при клике на вкладку)
   chrome.tabs.onActivated.addListener((info) => { // {tabId, windowId}
     console.log(5555, 'onActivated', info)
+    ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
+
   })
 
   // set handler to tabs:  need for seng objects
@@ -71,6 +96,10 @@ window.onload = function () { // work for each click in ixon
       case 'dom-loaded':
         console.log(request.data, request.data.getElementsByTagName('body')[0])
         break
+      // openPopup
+      case 'isClassBet':
+        ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
+        bg.isClassBet = request.isClassBet
     }
   })
 

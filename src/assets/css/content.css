@@ -1,0 +1,14 @@
+.bet_extansion {
+  position: fixed;
+  top: 0;
+  z-index: 10010;
+  width: 100%;
+  background: black;
+  color: green;
+  display: flex;
+  justify-content: space-around;
+
+  &.disabled {
+    display: none;
+  }
+}

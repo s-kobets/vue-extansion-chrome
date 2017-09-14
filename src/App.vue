@@ -2,6 +2,10 @@
   <div id="app">
     <div>
       Hello Chrome Extansion
+      <div v-for="match in dataResponse.result">
+        <span>{{match.event.name}}</span>-<span>{{match.event.kind.name}}</span>=<span>{{match.coefficient}}</span>
+      </div>
+      
       <button @click="onClick">Google</button>
     </div>
   </div>
@@ -13,6 +17,10 @@
 export default {
   name: 'app',
 
+  data: () => ({
+    dataResponse: {}
+  }),
+
   methods: {
     onClick() {
       chrome.extension.sendMessage({
@@ -23,6 +31,18 @@ export default {
   },
 
   components: {},
+
+  created() {
+    chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+      console.log(989777, 'addListener vue', request)
+      switch (request.action) {
+        case 'xnrResult':
+          this.dataResponse = request.value
+          break
+      }
+    })
+
+  }
 }
 </script>
 
