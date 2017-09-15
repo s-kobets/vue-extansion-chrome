@@ -31,7 +31,7 @@ module.exports = merge(baseConfig, {
 
         content_scripts: [
           {
-            matches: ['<all_urls>'],
+            matches: ['<all_urls>'], // http://test.s-kobets.com/**/*
             js: ['content.js'],
             css: ['content.css'],
             run_at: 'document_start'
@@ -39,6 +39,7 @@ module.exports = merge(baseConfig, {
         ],
 
         permissions: [
+          'notifications',
           'activeTab',
           '<all_urls>'
         ]

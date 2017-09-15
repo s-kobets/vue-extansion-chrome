@@ -4,6 +4,7 @@
 window.onload = function () { // work for each click in ixon
   const bg = {}
   const xhr = new XMLHttpRequest()
+  const notification = 'bet-notification'
 
   const ajax = (xhr, url, typeRequest, body) => {
     xhr.open(typeRequest, url, true)
@@ -25,7 +26,7 @@ window.onload = function () { // work for each click in ixon
         //   {code: `document.body.innerHTML += ''`},
         //   () => { console.log(4343, 'add Content') }
         // )
-        console.log(80000, 'add HTML')
+        console.log(1234234, 'current URL', tab.url) // tabId, windowId
       }
 
       xhr.onreadystatechange = () => {
@@ -47,7 +48,7 @@ window.onload = function () { // work for each click in ixon
         }
       }
 
-      ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
+      // ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
 
       // open popup
       chrome.browserAction.setPopup({popup: 'index.html'})
@@ -66,20 +67,22 @@ window.onload = function () { // work for each click in ixon
       })
     }
 
-    console.log(bg) // tabId, windowId
-
   })
 
   // set handler to tabs (при клике на вкладку)
   chrome.tabs.onActivated.addListener((info) => { // {tabId, windowId}
     console.log(5555, 'onActivated', info)
-    ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
+    console.log(1234234, 'current URL click tab', bg.active_tab.url) // tabId, windowId
+    chrome.notifications.clear(notification)
+
+    // ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
 
   })
 
   // set handler to tabs:  need for seng objects
   chrome.extension.onConnect.addListener((port) => {
     console.log(6666, 'onConnect', port)
+    port.onDisconnect()
   })
 
   // set handler to extention on icon click
@@ -102,6 +105,13 @@ window.onload = function () { // work for each click in ixon
         break
       // openPopup
       case 'isClassBet':
+        chrome.notifications.create(notification, {
+          type: 'basic',
+          iconUrl: bg.active_tab && bg.active_tab.favIconUrl,
+          title: 'Time for cake!',
+          message: 'Something something cake'
+        })
+
         ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
         bg.isClassBet = request.isClassBet
     }
