@@ -3,12 +3,6 @@
 /* global chrome */
 
 window.addEventListener('load', function () {
-  // сlick at icon extansion
-  chrome.extension.sendMessage({
-    action: 'isClassBet',
-    isClassBet: document.getElementById('bet_extansion')
-  })
-
   function addPrognosis (result) {
     const div = document.createElement('div')
     let dataResponse = ''
@@ -45,8 +39,49 @@ window.addEventListener('load', function () {
     const body = document.querySelectorAll('body')[0]
     div.appendChild(createButton())
     body.appendChild(div)
-    console.log(67234, 'мы на странице вкладки', body, div)
+    console.log(67234, 'мы на странице вкладки', body, div, window)
+
+    // создаём экземпляр MutationObserver
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        console.log(mutation)
+      })
+    })
+
+    // конфигурация нашего observer:
+    const config = { attributes: true, childList: true, characterData: true }
+    
+    // передаём в качестве аргументов целевой элемент и его конфигурацию
+    observer.observe(body, config)
+    
+    // позже можно остановить наблюдение
+    // observer.disconnect();
   }
+
+  const sendNotification = (title, options) => {
+    // Проверим, поддерживает ли браузер HTML5 Notifications
+    if (!('Notification' in window)) {
+      console.log('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.')
+    } else {
+      // Если права есть, отправим уведомление
+      const notification = new Notification(title, options)
+      const clickFunc = () => { console.log('Пользователь кликнул на уведомление') }
+      notification.onclick = clickFunc
+    }
+  }
+
+  sendNotification('Верните Линуса!', {
+    body: 'Тестирование HTML5 Notifications',
+    dir: 'auto'
+  })
+
+  console.log(892498723984, 'дергаем контент скрипт')
+
+  // сlick at icon extansion
+  chrome.extension.sendMessage({
+    action: 'isClassBet',
+    isClassBet: document.getElementById('bet_extansion')
+  })
 
   chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
     console.log(12343, 'content, response', request)

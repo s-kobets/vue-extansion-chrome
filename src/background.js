@@ -4,7 +4,6 @@
 window.onload = function () { // work for each click in ixon
   const bg = {}
   const xhr = new XMLHttpRequest()
-  const notification = 'bet-notification'
 
   const ajax = (xhr, url, typeRequest, body) => {
     xhr.open(typeRequest, url, true)
@@ -69,12 +68,10 @@ window.onload = function () { // work for each click in ixon
 
   })
 
-  // set handler to tabs (при клике на вкладку)
+  // set handler to tabs ( происходит тогда, когда пользователь перешел на новую вкладку )
   chrome.tabs.onActivated.addListener((info) => { // {tabId, windowId}
     console.log(5555, 'onActivated', info)
     console.log(1234234, 'current URL click tab', bg.active_tab.url) // tabId, windowId
-    chrome.notifications.clear(notification)
-
     // ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
 
   })
@@ -105,13 +102,6 @@ window.onload = function () { // work for each click in ixon
         break
       // openPopup
       case 'isClassBet':
-        chrome.notifications.create(notification, {
-          type: 'basic',
-          iconUrl: bg.active_tab && bg.active_tab.favIconUrl,
-          title: 'Time for cake!',
-          message: 'Something something cake'
-        })
-
         ajax(xhr, 'http://www.mocky.io/v2/59ba3efd0f00006601622752', 'GET')
         bg.isClassBet = request.isClassBet
     }
